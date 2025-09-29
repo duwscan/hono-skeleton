@@ -3,6 +3,7 @@ import type { RequestContext } from "../types/RequestContext.js";
 import { ok } from "../core/result.js";
 import { middlewares } from "../middleware/index.js";
 import { updateUser } from "../app/users/usecase/updateUser.js";
+import { createUser } from "../app/users/usecase/createUser.js";
 import { addUserRoles } from "../app/users/usecase/addUserRoles.js";
 import { removeUserRoles } from "../app/users/usecase/removeUserRoles.js";
 import { syncUserRoles } from "../app/users/usecase/syncUserRoles.js";
@@ -19,6 +20,13 @@ usersRoutes.use("*", middlewares.permissions([MANAGE_USERS_PERMISSION]));
 usersRoutes.get("/", async (c) => {
   const rows = await listUsers();
   return c.json(ok(rows));
+});
+
+// Create user via Better Auth (email + password)
+usersRoutes.post("/", async (c) => {
+  const body = await c.req.json();
+  const user = await createUser(body);
+  return c.json(ok(user), 201);
 });
 
 // Get user with roles and permissions
@@ -64,4 +72,3 @@ usersRoutes.delete("/:id/roles", async (c) => {
 });
 
 export default usersRoutes;
-

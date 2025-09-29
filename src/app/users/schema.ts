@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+export const CreateUserInput = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  password: z.string().min(8),
+  image: z.string().url().nullable().optional(),
+});
+
+export type CreateUserInput = z.infer<typeof CreateUserInput>;
+
 export const UpdateUserInput = z.object({
   id: z.string().min(1),
   name: z.string().min(1).optional(),
@@ -28,4 +37,3 @@ export const RemoveUserRolesInput = z.object({
 });
 
 export type RemoveUserRolesInput = z.infer<typeof RemoveUserRolesInput>;
-
