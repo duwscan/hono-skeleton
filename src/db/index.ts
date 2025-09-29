@@ -1,7 +1,8 @@
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from 'drizzle-orm/mysql2'
 
 import mysql from "mysql2/promise";
 import { databaseConfig } from '../config/database.js';
+import * as schema from './schema.js';
 
 const dbCredentials = {
   host: databaseConfig.host,
@@ -12,11 +13,10 @@ const dbCredentials = {
 }
   
 const poolConnection = mysql.createPool(dbCredentials);
-const db = drizzle({ client: poolConnection });
-// or if you need client connection
+const db = drizzle(poolConnection, { schema, mode: "default" })
 async function main() {
   const connection = await mysql.createConnection(dbCredentials);
-  const db = drizzle({ client: connection });
+  const db = drizzle(connection, { schema, mode: "default" });
 }
 main();
 

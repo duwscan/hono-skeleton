@@ -1,4 +1,4 @@
-import { mysqlTable, primaryKey, varchar, text, timestamp, unique, tinyint } from "drizzle-orm/mysql-core"
+import { mysqlTable, primaryKey, varchar, text, timestamp, unique, tinyint, int } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 export const accounts = mysqlTable("accounts", {
@@ -63,7 +63,7 @@ export const verifications = mysqlTable("verifications", {
 
 // adding roles table
 export const roles = mysqlTable("roles", {
-	id: varchar({ length: 36 }).notNull(),
+	id: int("id").autoincrement().notNull(),
 	name: varchar({ length: 50 }).notNull(),
   slug: varchar({ length: 50 }).notNull(),
   description: text(),
@@ -76,7 +76,7 @@ export const roles = mysqlTable("roles", {
 ]);
 // adding permissions table 
 export const permissions = mysqlTable("permissions", {
-	id: varchar({ length: 36 }).notNull(),
+	id: int("id").autoincrement().notNull(),
 	name: varchar({ length: 50 }).notNull(),
 	slug: varchar({ length: 50 }).notNull(),
 	description: text(),
@@ -89,9 +89,9 @@ export const permissions = mysqlTable("permissions", {
 ]);
 // adding pivot table for roles and permissions
 export const rolePermissions = mysqlTable("role_permissions", {
-	id: varchar({ length: 36 }).notNull(),
-	roleId: varchar("role_id", { length: 36 }).notNull().references(() => roles.id, { onDelete: "cascade" } ),
-	permissionId: varchar("permission_id", { length: 36 }).notNull().references(() => permissions.id, { onDelete: "cascade" } ),
+	id: int("id").autoincrement().notNull(),
+	roleId: int("role_id").notNull().references(() => roles.id, { onDelete: "cascade" } ),
+	permissionId: int("permission_id").notNull().references(() => permissions.id, { onDelete: "cascade" } ),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`).notNull(),
 	updatedAt: timestamp("updated_at", { mode: 'string' }).default(sql`(now())`).notNull(),
 },
@@ -100,8 +100,8 @@ export const rolePermissions = mysqlTable("role_permissions", {
 ]);
 // adding pivot table for roles and users
 export const roleUsers = mysqlTable("role_users", {
-	id: varchar({ length: 36 }).notNull(),
-	roleId: varchar("role_id", { length: 36 }).notNull().references(() => roles.id, { onDelete: "cascade" } ),
+	id: int("id").autoincrement().notNull(),
+	roleId: int("role_id").notNull().references(() => roles.id, { onDelete: "cascade" } ),
 	userId: varchar("user_id", { length: 36 }).notNull().references(() => users.id, { onDelete: "cascade" } ),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`).notNull(),
 	updatedAt: timestamp("updated_at", { mode: 'string' }).default(sql`(now())`).notNull(),
