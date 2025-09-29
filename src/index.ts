@@ -8,6 +8,7 @@ import type { RequestContext } from './types/RequestContext.js'
 import { bootstrapMiddlewares } from './middleware/index.js'
 
 const app = new Hono<RequestContext>()
+const route = new Hono<RequestContext>()
 const openAPIAuthSchema = await auth.api.generateOpenAPISchema()
 app.get(
   '/doc',
@@ -27,7 +28,8 @@ app.get(
   })
 )
 bootstrapMiddlewares(app)
-routes(app)
+routes(route)
+app.route('/api',route)
 app.get('/ui', swaggerUI({ url: '/doc' }))
 serve({
   fetch: app.fetch,

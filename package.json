@@ -2,6 +2,7 @@
   "name": "my-app",
   "type": "module",
   "scripts": {
+    "betterauth:generate": "npx @better-auth/cli generate --config ./src/config/auth.ts --output ./src/db/schema.ts",
     "db:migrate": "npx drizzle-kit migrate",
     "db:change": "npx drizzle-kit generate",
     "dev": "tsx watch src/index.ts",

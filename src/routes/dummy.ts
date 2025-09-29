@@ -6,7 +6,6 @@ import { middlewares } from "../middleware/index.js";
 
 const dummyRoutes = new Hono<RequestContext>()
 dummyRoutes.use('*', middlewares.auth)
-
 dummyRoutes.post('/hello', describeRoute({
   description: 'Say hello to the user',
   responses: {
