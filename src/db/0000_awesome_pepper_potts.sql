@@ -1,3 +1,6 @@
+-- Current sql file was generated after introspecting the database
+-- If you want to run this migration please uncomment this code before executing migrations
+/*
 CREATE TABLE `accounts` (
 	`id` varchar(36) NOT NULL,
 	`account_id` text NOT NULL,
@@ -32,7 +35,7 @@ CREATE TABLE `users` (
 	`id` varchar(36) NOT NULL,
 	`name` text NOT NULL,
 	`email` varchar(255) NOT NULL,
-	`email_verified` boolean NOT NULL DEFAULT false,
+	`email_verified` tinyint(1) NOT NULL DEFAULT 0,
 	`image` text,
 	`created_at` timestamp NOT NULL DEFAULT (now()),
 	`updated_at` timestamp NOT NULL DEFAULT (now()),
@@ -52,3 +55,4 @@ CREATE TABLE `verifications` (
 --> statement-breakpoint
 ALTER TABLE `accounts` ADD CONSTRAINT `accounts_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `sessions` ADD CONSTRAINT `sessions_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;
+*/
