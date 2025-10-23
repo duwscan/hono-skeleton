@@ -11,9 +11,6 @@ export const routes = (app: Hono<RequestContext>) => {
   app.route('/roles', rolesRoutes)
   app.route('/permissions', permissionsRoutes)
   app.route('/users', usersRoutes)
-  app.on(["POST", "GET"], "/api/auth/*", (c) => {
-    return auth.handler(c.req.raw);
-  });
 
   return app;
 }

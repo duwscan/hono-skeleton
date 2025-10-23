@@ -1,0 +1,4307 @@
+# My API
+
+- **OpenAPI Version:** `3.1.0`
+- **API Version:** `1.0.0`
+
+My API
+
+## Servers
+
+- **URL:** `http://localhost:3001`
+  - **Description:** Local Server
+
+## Operations
+
+### POST /api/dummy/hello
+
+- **Method:** `POST`
+- **Path:** `/api/dummy/hello`
+
+Say hello to the user
+
+#### Responses
+
+##### Status: 200 Successful response
+
+### POST /api/sign-in/social
+
+- **Method:** `POST`
+- **Path:** `/api/sign-in/social`
+- **Tags:** Default
+
+Sign in with a social provider
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`provider` (required)**
+
+  `string`
+
+- **`callbackURL`**
+
+  `string` — Callback URL to redirect to after the user has signed in
+
+- **`disableRedirect`**
+
+  `boolean` — Disable automatic redirection to the provider. Useful for handling the redirection yourself
+
+- **`errorCallbackURL`**
+
+  `string` — Callback URL to redirect to if an error happens
+
+- **`idToken`**
+
+  `object`
+
+  - **`token` (required)**
+
+    `string` — ID token from the provider
+
+  - **`accessToken`**
+
+    `string` — Access token from the provider
+
+  - **`expiresAt`**
+
+    `number` — Expiry date of the token
+
+  - **`nonce`**
+
+    `string` — Nonce used to generate the token
+
+  - **`refreshToken`**
+
+    `string` — Refresh token from the provider
+
+- **`loginHint`**
+
+  `string` — The login hint to use for the authorization code request
+
+- **`newUserCallbackURL`**
+
+  `string`
+
+- **`requestSignUp`**
+
+  `boolean` — Explicitly request sign-up. Useful when disableImplicitSignUp is true for this provider
+
+- **`scopes`**
+
+  `array` — Array of scopes to request from the provider. This will override the default scopes passed.
+
+**Example:**
+
+```
+{
+  "callbackURL": "",
+  "newUserCallbackURL": "",
+  "errorCallbackURL": "",
+  "provider": "",
+  "disableRedirect": true,
+  "idToken": {
+    "token": "",
+    "nonce": "",
+    "accessToken": "",
+    "refreshToken": "",
+    "expiresAt": 1
+  },
+  "scopes": [],
+  "requestSignUp": true,
+  "loginHint": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Success - Returns either session details or redirect URL
+
+###### Content-Type: application/json
+
+- **`redirect` (required)**
+
+  `boolean`, possible values: `false`
+
+- **`token` (required)**
+
+  `string` — Session token
+
+**Example:**
+
+```
+{
+  "redirect": false,
+  "token": ""
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### GET /api/get-session
+
+- **Method:** `GET`
+- **Path:** `/api/get-session`
+- **Tags:** Default
+
+Get the current session
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`session` (required)**
+
+  `object`
+
+- **`user` (required)**
+
+  `object`
+
+**Example:**
+
+```
+{}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/sign-out
+
+- **Method:** `POST`
+- **Path:** `/api/sign-out`
+- **Tags:** Default
+
+Sign out the current user
+
+#### Request Body
+
+##### Content-Type: application/json
+
+**Example:**
+
+```
+{}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`success`**
+
+  `boolean`
+
+**Example:**
+
+```
+{
+  "success": true
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/sign-up/email
+
+- **Method:** `POST`
+- **Path:** `/api/sign-up/email`
+- **Tags:** Default
+
+Sign up a user using email and password
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`email` (required)**
+
+  `string` — The email of the user
+
+- **`name` (required)**
+
+  `string` — The name of the user
+
+- **`password` (required)**
+
+  `string` — The password of the user
+
+- **`callbackURL`**
+
+  `string` — The URL to use for email verification callback
+
+- **`image`**
+
+  `string` — The profile image URL of the user
+
+- **`rememberMe`**
+
+  `boolean` — If this is false, the session will not be remembered. Default is \`true\`.
+
+**Example:**
+
+```
+{
+  "name": "",
+  "email": "",
+  "password": "",
+  "image": "",
+  "callbackURL": "",
+  "rememberMe": true
+}
+```
+
+#### Responses
+
+##### Status: 200 Successfully created user
+
+###### Content-Type: application/json
+
+- **`user` (required)**
+
+  `object`
+
+  - **`createdAt` (required)**
+
+    `string`, format: `date-time` — When the user was created
+
+  - **`email` (required)**
+
+    `string`, format: `email` — The email address of the user
+
+  - **`emailVerified` (required)**
+
+    `boolean` — Whether the email has been verified
+
+  - **`id` (required)**
+
+    `string` — The unique identifier of the user
+
+  - **`name` (required)**
+
+    `string` — The name of the user
+
+  - **`updatedAt` (required)**
+
+    `string`, format: `date-time` — When the user was last updated
+
+  - **`image`**
+
+    `string`, format: `uri` — The profile image URL of the user
+
+- **`token`**
+
+  `string` — Authentication token for the session
+
+**Example:**
+
+```
+{
+  "token": "",
+  "user": {
+    "id": "",
+    "email": "",
+    "name": "",
+    "image": "",
+    "emailVerified": true,
+    "createdAt": "",
+    "updatedAt": ""
+  }
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 422 Unprocessable Entity. User already exists or failed to create user.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/sign-in/email
+
+- **Method:** `POST`
+- **Path:** `/api/sign-in/email`
+- **Tags:** Default
+
+Sign in with email and password
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`email` (required)**
+
+  `string` — Email of the user
+
+- **`password` (required)**
+
+  `string` — Password of the user
+
+- **`callbackURL`**
+
+  `string` — Callback URL to use as a redirect for email verification
+
+- **`rememberMe`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "email": "",
+  "password": "",
+  "callbackURL": "",
+  "rememberMe": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Success - Returns either session details or redirect URL
+
+###### Content-Type: application/json
+
+- **`redirect` (required)**
+
+  `boolean`, possible values: `false`
+
+- **`token` (required)**
+
+  `string` — Session token
+
+- **`user` (required)**
+
+  `object`
+
+  - **`createdAt` (required)**
+
+    `string`, format: `date-time`
+
+  - **`email` (required)**
+
+    `string`
+
+  - **`emailVerified` (required)**
+
+    `boolean`
+
+  - **`id` (required)**
+
+    `string`
+
+  - **`updatedAt` (required)**
+
+    `string`, format: `date-time`
+
+  - **`image`**
+
+    `string`
+
+  - **`name`**
+
+    `string`
+
+- **`url`**
+
+  `null`
+
+**Example:**
+
+```
+{
+  "redirect": false,
+  "token": "",
+  "url": null,
+  "user": {
+    "id": "",
+    "email": "",
+    "name": "",
+    "image": "",
+    "emailVerified": true,
+    "createdAt": "",
+    "updatedAt": ""
+  }
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/forget-password
+
+- **Method:** `POST`
+- **Path:** `/api/forget-password`
+- **Tags:** Default
+
+Send a password reset email to the user
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`email` (required)**
+
+  `string` — The email address of the user to send a password reset email to
+
+- **`redirectTo`**
+
+  `string` — The URL to redirect the user to reset their password. If the token isn't valid or expired, it'll be redirected with a query parameter \`?error=INVALID\_TOKEN\`. If the token is valid, it'll be redirected with a query parameter \`?token=VALID\_TOKEN
+
+**Example:**
+
+```
+{
+  "email": "",
+  "redirectTo": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+- **`status`**
+
+  `boolean`
+
+**Example:**
+
+```
+{
+  "status": true,
+  "message": ""
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/reset-password
+
+- **Method:** `POST`
+- **Path:** `/api/reset-password`
+- **Tags:** Default
+
+Reset the password for a user
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`newPassword` (required)**
+
+  `string` — The new password to set
+
+- **`token`**
+
+  `string` — The token to reset the password
+
+**Example:**
+
+```
+{
+  "newPassword": "",
+  "token": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`status`**
+
+  `boolean`
+
+**Example:**
+
+```
+{
+  "status": true
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### GET /api/verify-email
+
+- **Method:** `GET`
+- **Path:** `/api/verify-email`
+- **Tags:** Default
+
+Verify the email of the user
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`status` (required)**
+
+  `boolean` — Indicates if the email was verified successfully
+
+- **`user` (required)**
+
+  `object`
+
+  - **`createdAt` (required)**
+
+    `string` — User creation date
+
+  - **`email` (required)**
+
+    `string` — User email
+
+  - **`emailVerified` (required)**
+
+    `boolean` — Indicates if the user email is verified
+
+  - **`id` (required)**
+
+    `string` — User ID
+
+  - **`image` (required)**
+
+    `string` — User image URL
+
+  - **`name` (required)**
+
+    `string` — User name
+
+  - **`updatedAt` (required)**
+
+    `string` — User update date
+
+**Example:**
+
+```
+{
+  "user": {
+    "id": "",
+    "email": "",
+    "name": "",
+    "image": "",
+    "emailVerified": true,
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  "status": true
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/send-verification-email
+
+- **Method:** `POST`
+- **Path:** `/api/send-verification-email`
+- **Tags:** Default
+
+Send a verification email to the user
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`email` (required)**
+
+  `string` — The email to send the verification email to
+
+- **`callbackURL`**
+
+  `string` — The URL to use for email verification callback
+
+**Example:**
+
+```
+{
+  "email": "user@example.com",
+  "callbackURL": "https://example.com/callback"
+}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`status`**
+
+  `boolean` — Indicates if the email was sent successfully
+
+**Example:**
+
+```
+{
+  "status": true
+}
+```
+
+##### Status: 400 Bad Request
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string` — Error message
+
+**Example:**
+
+```
+{
+  "message": "Verification email isn't enabled"
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/change-email
+
+- **Method:** `POST`
+- **Path:** `/api/change-email`
+- **Tags:** Default
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`newEmail` (required)**
+
+  `string` — The new email address to set must be a valid email address
+
+- **`callbackURL`**
+
+  `string` — The URL to redirect to after email verification
+
+**Example:**
+
+```
+{
+  "newEmail": "",
+  "callbackURL": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Email change request processed successfully
+
+###### Content-Type: application/json
+
+- **`status` (required)**
+
+  `boolean` — Indicates if the request was successful
+
+- **`message`**
+
+  `string`, possible values: `"Email updated", "Verification email sent"` — Status message of the email change process
+
+**Example:**
+
+```
+{
+  "status": true,
+  "message": "Email updated"
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 422 Unprocessable Entity. Email already exists
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/change-password
+
+- **Method:** `POST`
+- **Path:** `/api/change-password`
+- **Tags:** Default
+
+Change the password of the user
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`currentPassword` (required)**
+
+  `string` — The current password is required
+
+- **`newPassword` (required)**
+
+  `string` — The new password to set
+
+- **`revokeOtherSessions`**
+
+  `boolean` — Must be a boolean value
+
+**Example:**
+
+```
+{
+  "newPassword": "",
+  "currentPassword": "",
+  "revokeOtherSessions": true
+}
+```
+
+#### Responses
+
+##### Status: 200 Password successfully changed
+
+###### Content-Type: application/json
+
+- **`user` (required)**
+
+  `object`
+
+  - **`createdAt` (required)**
+
+    `string`, format: `date-time` — When the user was created
+
+  - **`email` (required)**
+
+    `string`, format: `email` — The email address of the user
+
+  - **`emailVerified` (required)**
+
+    `boolean` — Whether the email has been verified
+
+  - **`id` (required)**
+
+    `string` — The unique identifier of the user
+
+  - **`name` (required)**
+
+    `string` — The name of the user
+
+  - **`updatedAt` (required)**
+
+    `string`, format: `date-time` — When the user was last updated
+
+  - **`image`**
+
+    `string`, format: `uri` — The profile image URL of the user
+
+- **`token`**
+
+  `string` — New session token if other sessions were revoked
+
+**Example:**
+
+```
+{
+  "token": "",
+  "user": {
+    "id": "",
+    "email": "",
+    "name": "",
+    "image": "",
+    "emailVerified": true,
+    "createdAt": "",
+    "updatedAt": ""
+  }
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/update-user
+
+- **Method:** `POST`
+- **Path:** `/api/update-user`
+- **Tags:** Default
+
+Update the current user
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`image`**
+
+  `string` — The image of the user
+
+- **`name`**
+
+  `string` — The name of the user
+
+**Example:**
+
+```
+{
+  "name": "",
+  "image": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`status`**
+
+  `boolean` — Indicates if the update was successful
+
+**Example:**
+
+```
+{
+  "status": true
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/delete-user
+
+- **Method:** `POST`
+- **Path:** `/api/delete-user`
+- **Tags:** Default
+
+Delete the user
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`callbackURL`**
+
+  `string` — The callback URL to redirect to after the user is deleted
+
+- **`password`**
+
+  `string` — The password of the user is required to delete the user
+
+- **`token`**
+
+  `string` — The token to delete the user is required
+
+**Example:**
+
+```
+{
+  "callbackURL": "",
+  "password": "",
+  "token": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 User deletion processed successfully
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`, possible values: `"User deleted", "Verification email sent"` — Status message of the deletion process
+
+- **`success` (required)**
+
+  `boolean` — Indicates if the operation was successful
+
+**Example:**
+
+```
+{
+  "success": true,
+  "message": "User deleted"
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### GET /api/reset-password/{token}
+
+- **Method:** `GET`
+- **Path:** `/api/reset-password/{token}`
+- **Tags:** Default
+
+Redirects the user to the callback URL with the token
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`token`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "token": ""
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/request-password-reset
+
+- **Method:** `POST`
+- **Path:** `/api/request-password-reset`
+- **Tags:** Default
+
+Send a password reset email to the user
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`email` (required)**
+
+  `string` — The email address of the user to send a password reset email to
+
+- **`redirectTo`**
+
+  `string` — The URL to redirect the user to reset their password. If the token isn't valid or expired, it'll be redirected with a query parameter \`?error=INVALID\_TOKEN\`. If the token is valid, it'll be redirected with a query parameter \`?token=VALID\_TOKEN
+
+**Example:**
+
+```
+{
+  "email": "",
+  "redirectTo": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+- **`status`**
+
+  `boolean`
+
+**Example:**
+
+```
+{
+  "status": true,
+  "message": ""
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### GET /api/list-sessions
+
+- **Method:** `GET`
+- **Path:** `/api/list-sessions`
+- **Tags:** Default
+
+List all active sessions for the user
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+**Array of:**
+
+**Example:**
+
+```
+[]
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/revoke-session
+
+- **Method:** `POST`
+- **Path:** `/api/revoke-session`
+- **Tags:** Default
+
+Revoke a single session
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`token` (required)**
+
+  `string` — The token to revoke
+
+**Example:**
+
+```
+{
+  "token": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`status` (required)**
+
+  `boolean` — Indicates if the session was revoked successfully
+
+**Example:**
+
+```
+{
+  "status": true
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/revoke-sessions
+
+- **Method:** `POST`
+- **Path:** `/api/revoke-sessions`
+- **Tags:** Default
+
+Revoke all sessions for the user
+
+#### Request Body
+
+##### Content-Type: application/json
+
+**Example:**
+
+```
+{}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`status` (required)**
+
+  `boolean` — Indicates if all sessions were revoked successfully
+
+**Example:**
+
+```
+{
+  "status": true
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/revoke-other-sessions
+
+- **Method:** `POST`
+- **Path:** `/api/revoke-other-sessions`
+- **Tags:** Default
+
+Revoke all other sessions for the user except the current one
+
+#### Request Body
+
+##### Content-Type: application/json
+
+**Example:**
+
+```
+{}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`status` (required)**
+
+  `boolean` — Indicates if all other sessions were revoked successfully
+
+**Example:**
+
+```
+{
+  "status": true
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/link-social
+
+- **Method:** `POST`
+- **Path:** `/api/link-social`
+- **Tags:** Default
+
+Link a social account to the user
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`provider` (required)**
+
+  `string`
+
+- **`callbackURL`**
+
+  `string` — The URL to redirect to after the user has signed in
+
+- **`disableRedirect`**
+
+  `boolean` — Disable automatic redirection to the provider. Useful for handling the redirection yourself
+
+- **`errorCallbackURL`**
+
+  `string` — The URL to redirect to if there is an error during the link process
+
+- **`idToken`**
+
+  `object`
+
+  - **`token` (required)**
+
+    `string`
+
+  - **`accessToken`**
+
+    `string`
+
+  - **`nonce`**
+
+    `string`
+
+  - **`refreshToken`**
+
+    `string`
+
+  - **`scopes`**
+
+    `array`
+
+- **`requestSignUp`**
+
+  `boolean`
+
+- **`scopes`**
+
+  `array` — Additional scopes to request from the provider
+
+**Example:**
+
+```
+{
+  "callbackURL": "",
+  "provider": "",
+  "idToken": {
+    "token": "",
+    "nonce": "",
+    "accessToken": "",
+    "refreshToken": "",
+    "scopes": []
+  },
+  "requestSignUp": true,
+  "scopes": [],
+  "errorCallbackURL": "",
+  "disableRedirect": true
+}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`redirect` (required)**
+
+  `boolean` — Indicates if the user should be redirected to the authorization URL
+
+- **`status`**
+
+  `boolean`
+
+- **`url`**
+
+  `string` — The authorization URL to redirect the user to
+
+**Example:**
+
+```
+{
+  "url": "",
+  "redirect": true,
+  "status": true
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### GET /api/list-accounts
+
+- **Method:** `GET`
+- **Path:** `/api/list-accounts`
+- **Tags:** Default
+
+List all accounts linked to the user
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+**Array of:**
+
+- **`accountId` (required)**
+
+  `string`
+
+- **`createdAt` (required)**
+
+  `string`, format: `date-time`
+
+- **`id` (required)**
+
+  `string`
+
+- **`providerId` (required)**
+
+  `string`
+
+- **`scopes` (required)**
+
+  `array`
+
+  **Items:**
+
+  `string`
+
+- **`updatedAt` (required)**
+
+  `string`, format: `date-time`
+
+**Example:**
+
+```
+[
+  {
+    "id": "",
+    "providerId": "",
+    "createdAt": "",
+    "updatedAt": "",
+    "accountId": "",
+    "scopes": [
+      ""
+    ]
+  }
+]
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### GET /api/delete-user/callback
+
+- **Method:** `GET`
+- **Path:** `/api/delete-user/callback`
+- **Tags:** Default
+
+Callback to complete user deletion with verification token
+
+#### Responses
+
+##### Status: 200 User successfully deleted
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`, possible values: `"User deleted"` — Confirmation message
+
+- **`success` (required)**
+
+  `boolean` — Indicates if the deletion was successful
+
+**Example:**
+
+```
+{
+  "success": true,
+  "message": "User deleted"
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/unlink-account
+
+- **Method:** `POST`
+- **Path:** `/api/unlink-account`
+- **Tags:** Default
+
+Unlink an account
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`providerId` (required)**
+
+  `string`
+
+- **`accountId`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "providerId": "",
+  "accountId": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`status`**
+
+  `boolean`
+
+**Example:**
+
+```
+{
+  "status": true
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/refresh-token
+
+- **Method:** `POST`
+- **Path:** `/api/refresh-token`
+- **Tags:** Default
+
+Refresh the access token using a refresh token
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`providerId` (required)**
+
+  `string` — The provider ID for the OAuth provider
+
+- **`accountId`**
+
+  `string` — The account ID associated with the refresh token
+
+- **`userId`**
+
+  `string` — The user ID associated with the account
+
+**Example:**
+
+```
+{
+  "providerId": "",
+  "accountId": "",
+  "userId": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Access token refreshed successfully
+
+###### Content-Type: application/json
+
+- **`accessToken`**
+
+  `string`
+
+- **`accessTokenExpiresAt`**
+
+  `string`, format: `date-time`
+
+- **`idToken`**
+
+  `string`
+
+- **`refreshToken`**
+
+  `string`
+
+- **`refreshTokenExpiresAt`**
+
+  `string`, format: `date-time`
+
+- **`tokenType`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "tokenType": "",
+  "idToken": "",
+  "accessToken": "",
+  "refreshToken": "",
+  "accessTokenExpiresAt": "",
+  "refreshTokenExpiresAt": ""
+}
+```
+
+##### Status: 400 Invalid refresh token or provider configuration
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/get-access-token
+
+- **Method:** `POST`
+- **Path:** `/api/get-access-token`
+- **Tags:** Default
+
+Get a valid access token, doing a refresh if needed
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`providerId` (required)**
+
+  `string` — The provider ID for the OAuth provider
+
+- **`accountId`**
+
+  `string` — The account ID associated with the refresh token
+
+- **`userId`**
+
+  `string` — The user ID associated with the account
+
+**Example:**
+
+```
+{
+  "providerId": "",
+  "accountId": "",
+  "userId": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 A Valid access token
+
+###### Content-Type: application/json
+
+- **`accessToken`**
+
+  `string`
+
+- **`accessTokenExpiresAt`**
+
+  `string`, format: `date-time`
+
+- **`idToken`**
+
+  `string`
+
+- **`refreshToken`**
+
+  `string`
+
+- **`refreshTokenExpiresAt`**
+
+  `string`, format: `date-time`
+
+- **`tokenType`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "tokenType": "",
+  "idToken": "",
+  "accessToken": "",
+  "refreshToken": "",
+  "accessTokenExpiresAt": "",
+  "refreshTokenExpiresAt": ""
+}
+```
+
+##### Status: 400 Invalid refresh token or provider configuration
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### POST /api/account-info
+
+- **Method:** `POST`
+- **Path:** `/api/account-info`
+- **Tags:** Default
+
+Get the account info provided by the provider
+
+#### Request Body
+
+##### Content-Type: application/json
+
+- **`accountId` (required)**
+
+  `string` — The provider given account id for which to get the account info
+
+**Example:**
+
+```
+{
+  "accountId": ""
+}
+```
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: application/json
+
+- **`data` (required)**
+
+  `object`
+
+- **`user` (required)**
+
+  `object`
+
+  - **`emailVerified` (required)**
+
+    `boolean`
+
+  - **`id` (required)**
+
+    `string`
+
+  - **`email`**
+
+    `string`
+
+  - **`image`**
+
+    `string`
+
+  - **`name`**
+
+    `string`
+
+**Example:**
+
+```
+{
+  "user": {
+    "id": "",
+    "name": "",
+    "email": "",
+    "image": "",
+    "emailVerified": true
+  },
+  "data": {
+    "propertyName*": "anything"
+  }
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### GET /api/ok
+
+- **Method:** `GET`
+- **Path:** `/api/ok`
+- **Tags:** Default
+
+Check if the API is working
+
+#### Responses
+
+##### Status: 200 API is working
+
+###### Content-Type: application/json
+
+- **`ok` (required)**
+
+  `boolean` — Indicates if the API is working
+
+**Example:**
+
+```
+{
+  "ok": true
+}
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+### GET /api/error
+
+- **Method:** `GET`
+- **Path:** `/api/error`
+- **Tags:** Default
+
+Displays an error page
+
+#### Responses
+
+##### Status: 200 Success
+
+###### Content-Type: text/html
+
+`string` — The HTML content of the error page
+
+**Example:**
+
+```
+true
+```
+
+##### Status: 400 Bad Request. Usually due to missing parameters, or invalid parameters.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 401 Unauthorized. Due to missing or invalid authentication.
+
+###### Content-Type: application/json
+
+- **`message` (required)**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 403 Forbidden. You do not have permission to access this resource or to perform this action.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 404 Not Found. The requested resource was not found.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 429 Too Many Requests. You have exceeded the rate limit. Try again later.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
+
+##### Status: 500 Internal Server Error. This is a problem with the server that you cannot fix.
+
+###### Content-Type: application/json
+
+- **`message`**
+
+  `string`
+
+**Example:**
+
+```
+{
+  "message": ""
+}
+```
